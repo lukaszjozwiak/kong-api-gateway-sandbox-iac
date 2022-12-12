@@ -25,8 +25,13 @@ Project is a sandbox for testing Kong API Gateway. It sets up Kong using AWS EC2
 
 # Test 
 
-Kong runs on EC2 instance with dynamic IP address, so you need to go to details of AWS EC2 instance named `Kong` and get its `Public IPv4 DNS` or `Public IPv4 address`. AWS Security Group is configured to allow inbound traffic on all ports
+Kong runs on EC2 instance with dynamic IP address, so you need to go to details of AWS EC2 instance named `Kong` and get its `Public IPv4 DNS` or `Public IPv4 address`. AWS Security Group is configured to allow inbound traffic on all ports.
+
+Following configurations are applied to Kong, where `<PUBLIC_ADDRESS>` is AWS `Public IPv4 DNS` or `Public IPv4 address`:
+1. Routing to `https://mockbin.org/` is configured under `http://<PUBLIC_ADDRESS>:8080/mock`
+2. [Prometheus](https://docs.konghq.com/hub/kong-inc/prometheus/) plugin is installed. Metrics are available under `http://<PUBLIC_ADDRESS>:8081/metrics`
 
 # Clean up
 
-Run `terraform destroy -target="module.aws" -auto-approve` to remove all resources.
+1. Run `terraform destroy -target="module.kong" -auto-approve`
+2. Run `terraform destroy -target="module.aws" -auto-approve`
